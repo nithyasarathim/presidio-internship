@@ -1,5 +1,7 @@
 //https://leetcode.com/submissions/detail/1777931044/
 
+//DESIGN HASHMAP
+
 class MyHashMap {
     public:
         vector<int> mp;

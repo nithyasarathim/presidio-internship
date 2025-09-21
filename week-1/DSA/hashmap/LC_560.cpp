@@ -1,5 +1,7 @@
 //https://leetcode.com/submissions/detail/1777942422/
 
+//SUBARRAY SUM EQUALS K
+
 class Solution {
     public:
         int subarraySum(vector<int>& arr, int k) {
