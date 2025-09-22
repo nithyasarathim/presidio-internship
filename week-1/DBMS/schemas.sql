@@ -5,7 +5,8 @@ CREATE TABLE Users (
     dob DATE NOT NULL,
     phone_number VARCHAR(15) UNIQUE NOT NULL,
     gender VARCHAR(10) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    INDEX idx_phone_number (phone_number)
 );
 
 -- Posts table
