@@ -1,3 +1,3 @@
-import connectDB from "./services/db.js";
+import connectDB from "./config/db.js";
 
 connectDB();

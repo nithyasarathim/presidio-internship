@@ -1,5 +1,5 @@
 import Patient from '../models/Patient.js';
-import { sendWelcomeEmail } from '../services/transporter.js';
+import { sendWelcomeEmail } from '../services/emailService.js';
 
 // @desc    Get all patients
 // @route   GET /api/patients
