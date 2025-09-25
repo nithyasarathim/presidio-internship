@@ -8,6 +8,8 @@ import patientsRoutes from "./routes/patientRoutes.js";
 
 const app=express();
 
+app.use(express.json());
+
 app.use(requestLogger);
 app.use("/api/patients",patientsRoutes);
 app.use(errorHandler);

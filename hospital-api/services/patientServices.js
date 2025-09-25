@@ -1,10 +1,10 @@
 import Patient from "../modals/patient.js";
 import APIError from "../utilities/APIError.js";
-// const { sendWelcomeEmail } = require("./emailService");
+import {sendWelcomeEmail} from "./emailService.js";
 
 const createPatient = async (data) => {
   const patient = await Patient.create(data);
-//   await sendWelcomeEmail(patient);
+  await sendWelcomeEmail(patient);
   return patient;
 };
 

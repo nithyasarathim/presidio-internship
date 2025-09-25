@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 app.use("/mail", mailRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ success: true, message: "📧 Email Service is running" });
+  res.json({ success: true, message: "Email Service is running" });
 });
 
 app.use((err, req, res, next) => {
