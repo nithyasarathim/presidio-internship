@@ -1,19 +1,17 @@
-import transporter from '../config/transporter.js';
+
+import axios from 'axios';
+
+const EMAIL_SERVICE_URL = process.env.EMAIL_SERVICE_URL;
 
 const sendWelcomeEmail = async (patientEmail, patientName) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: patientEmail,
-    subject: 'Welcome to our Healthcare Portal!',
-    text: `Hello ${patientName},\n\nWelcome! A doctor has added you as a new patient. We're here to help you with your healthcare needs.`,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    console.log(`Welcome email sent to ${patientEmail}`);
-  } catch (error) {
-    console.error(`Failed to send welcome email to ${patientEmail}:`, error);
+    await axios.post(EMAIL_SERVICE_URL, {
+      to: patientEmail,
+      subject: 'Welcome to our Healthcare Portal!',
+      text: `Hello ${patientName},\n\nWelcome! A doctor has added you as a new patient. We're here to help you with your healthcare needs.`,
+    });
+    console.log(`Requested welcome email to ${patientEmail}`);
+  } catch (err) {
+    console.error(`Failed to send welcome email to ${patientEmail}:`, err.message);
   }
 };
-
-export { sendWelcomeEmail };
