@@ -1,4 +1,4 @@
-week-2/hospital_server/node_modules
-week-2/hospital_server/.env
-week-2/email_server/node_modules
-week-2/email_server/.env
+hospital_server/node_modules
+hospital_server/.env
+email_server/node_modules
+email_server/.env
