@@ -4,12 +4,12 @@ import express from "express";
 import connectDB from "./configs/db.js";
 import requestLogger from "./middlewares/requestLogger.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import patientsRoutes from "./routes/patientRoutes.js";
 
 const app=express();
 
 app.use(requestLogger);
-
-
+app.use("/api/patients",patientsRoutes);
 app.use(errorHandler);
 
 connectDB();

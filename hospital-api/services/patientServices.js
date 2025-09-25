@@ -1,10 +1,10 @@
 const Patient = require("../models/patient");
-const { sendWelcomeEmail } = require("./emailService");
+// const { sendWelcomeEmail } = require("./emailService");
 const APIError = require("../utils/APIError");
 
 const createPatient = async (data) => {
   const patient = await Patient.create(data);
-  await sendWelcomeEmail(patient);
+//   await sendWelcomeEmail(patient);
   return patient;
 };
 
@@ -29,7 +29,7 @@ const deletePatient = async (id) => {
   if (!patient) throw new APIError(404, "Patient not found");
 };
 
-module.exports={
+export default {
     createPatient,
     getPatientById,
     getPatients,

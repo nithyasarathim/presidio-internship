@@ -1,4 +1,4 @@
-const patientService= require("../services/patientServices");
+import patientService from "../services/patientServices.js";
 const logger = require("../utils/logger");
 
 const createPatient = async (req, res, next) => {
@@ -67,10 +67,10 @@ const deletePatient = async (req, res, next) => {
   }
 };
 
-module.exports={
-    deletePatient,
-    createPatient,
-    getPatient,
-    getPatients,
-    getPatientById
-}
+export default  {
+  createPatient,
+  getPatients,
+  getPatient,
+  updatePatient,
+  deletePatient
+};
