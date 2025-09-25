@@ -5,7 +5,7 @@ dotenv.config();
 import connectDB from './config/db.js';
 import patientRoutes from './routers/patientsRouter.js';
 import errorHandler from './middleware/errorHandler.js';
-import logger from './middleware/logger.js';
+import logger from './utils/logger.js';
 
 const app = express();
 
@@ -13,10 +13,8 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(express.json()); // Parses incoming JSON requests
-app.use(logger); // Logs all incoming requests
+app.use(express.json()); 
 
-// Mount Router
 app.use('/api/patients', patientRoutes);
 app.use(errorHandler);
 
