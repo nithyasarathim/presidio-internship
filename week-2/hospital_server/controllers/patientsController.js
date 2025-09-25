@@ -29,14 +29,25 @@ const getPatientById = async (req, res, next) => {
 const createPatient = async (req, res, next) => {
   try {
     logRequest(req, res);
+    const existingPatient = await Patient.findOne({ email: req.body.email });
+    if (existingPatient) {
+      const error = new Error('Patient with this email already exists');
+      error.statusCode = 400;
+      throw error;
+    }
     const newPatient = new Patient(req.body);
     const savedPatient = await newPatient.save();
-    await sendWelcomeEmail(savedPatient.email, savedPatient.name);
+    try {
+      await sendWelcomeEmail(savedPatient.email, savedPatient.name);
+    } catch (emailErr) {
+      console.error('Email send failed:', emailErr);
+    }
     res.status(201).json(savedPatient);
   } catch (err) {
     next(err);
   }
 };
+
 
 const updatePatient = async (req, res, next) => {
   try {

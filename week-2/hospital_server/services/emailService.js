@@ -2,6 +2,8 @@ const EMAIL_SERVICE_URL = process.env.EMAIL_SERVICE_URL;
 
 const sendWelcomeEmail = async (patientEmail, patientName) => {
   try {
+    console.log('Sending email request to:', EMAIL_SERVICE_URL); 
+
     const response = await fetch(EMAIL_SERVICE_URL, {
       method: 'POST',
       headers: {
@@ -21,7 +23,9 @@ const sendWelcomeEmail = async (patientEmail, patientName) => {
 
     console.log(`Requested welcome email to ${patientEmail}`);
   } catch (err) {
-    console.error(`Failed to send welcome email to ${patientEmail}:`, err.message);
+    console.error('Failed to send welcome email: Full error object ->', err);
+    console.error('Failed to send welcome email: Error message ->', err.message);
+    console.error('Failed to send welcome email: Stack trace ->', err.stack);
   }
 };
 
