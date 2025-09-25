@@ -5,7 +5,6 @@ dotenv.config();
 import connectDB from './config/db.js';
 import patientRoutes from './routers/patientsRouter.js';
 import errorHandler from './middleware/errorHandler.js';
-import logger from './utils/logger.js';
 
 const app = express();
 

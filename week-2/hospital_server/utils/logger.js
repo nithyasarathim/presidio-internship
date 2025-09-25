@@ -2,7 +2,6 @@
 const logRequest = (req, res) => {
   const start = new Date();
 
-  // Hook into response finish event
   res.on('finish', () => {
     const log = {
       time: start.toISOString(),
