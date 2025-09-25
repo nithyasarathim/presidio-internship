@@ -1,9 +1,8 @@
 import Patient from '../models/Patient.js';
 import { sendWelcomeEmail } from '../services/emailService.js';
+import ApiError from '../utils/ApiError.js';
 
-// @desc    Get all patients
-// @route   GET /api/patients
-// @access  Public
+// @desc   Get all patients
 const getAllPatients = async (req, res, next) => {
   try {
     const patients = await Patient.find();
@@ -13,14 +12,12 @@ const getAllPatients = async (req, res, next) => {
   }
 };
 
-// @desc    Get a single patient by ID
-// @route   GET /api/patients/:id
-// @access  Public
+// @desc   Get a single patient by ID
 const getPatientById = async (req, res, next) => {
   try {
     const patient = await Patient.findById(req.params.id);
     if (!patient) {
-      return res.status(404).json({ message: 'Patient not found' });
+      throw new ApiError(404, 'Patient not found');
     }
     res.status(200).json(patient);
   } catch (err) {
@@ -28,9 +25,7 @@ const getPatientById = async (req, res, next) => {
   }
 };
 
-// @desc    Create a new patient
-// @route   POST /api/patients
-// @access  Doctor
+// @desc   Create a new patient
 const createPatient = async (req, res, next) => {
   try {
     const newPatient = new Patient(req.body);
@@ -42,14 +37,12 @@ const createPatient = async (req, res, next) => {
   }
 };
 
-// @desc    Update a patient by ID
-// @route   PUT /api/patients/:id
-// @access  Doctor
+// @desc   Update a patient by ID
 const updatePatient = async (req, res, next) => {
   try {
     const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!patient) {
-      return res.status(404).json({ message: 'Patient not found' });
+      throw new ApiError(404, 'Patient not found');
     }
     res.status(200).json(patient);
   } catch (err) {
@@ -57,14 +50,12 @@ const updatePatient = async (req, res, next) => {
   }
 };
 
-// @desc    Delete a patient by ID
-// @route   DELETE /api/patients/:id
-// @access  Doctor
+// @desc   Delete a patient by ID
 const deletePatient = async (req, res, next) => {
   try {
     const patient = await Patient.findByIdAndDelete(req.params.id);
     if (!patient) {
-      return res.status(404).json({ message: 'Patient not found' });
+      throw new ApiError(404, 'Patient not found');
     }
     res.status(200).json({ message: 'Patient deleted successfully' });
   } catch (err) {
@@ -73,9 +64,9 @@ const deletePatient = async (req, res, next) => {
 };
 
 export {
-    getAllPatients,
-    getPatientById,
-    createPatient,
-    updatePatient,
-    deletePatient,
+  getAllPatients,
+  getPatientById,
+  createPatient,
+  updatePatient,
+  deletePatient,
 };

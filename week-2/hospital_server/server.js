@@ -19,8 +19,6 @@ app.use(logger); // Logs all incoming requests
 // Mount Router
 app.use('/api/patients', patientRoutes);
 
-// Error Handling Middleware
-// This must be the last middleware in the stack
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
