@@ -2,7 +2,6 @@ import Patient from '../models/Patient.js';
 import { sendWelcomeEmail } from '../services/emailService.js';
 import ApiError from '../utils/ApiError.js';
 
-// @desc   Get all patients
 const getAllPatients = async (req, res, next) => {
   try {
     const patients = await Patient.find();
@@ -12,7 +11,6 @@ const getAllPatients = async (req, res, next) => {
   }
 };
 
-// @desc   Get a single patient by ID
 const getPatientById = async (req, res, next) => {
   try {
     const patient = await Patient.findById(req.params.id);
@@ -25,7 +23,6 @@ const getPatientById = async (req, res, next) => {
   }
 };
 
-// @desc   Create a new patient
 const createPatient = async (req, res, next) => {
   try {
     const newPatient = new Patient(req.body);
@@ -37,7 +34,6 @@ const createPatient = async (req, res, next) => {
   }
 };
 
-// @desc   Update a patient by ID
 const updatePatient = async (req, res, next) => {
   try {
     const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -50,7 +46,6 @@ const updatePatient = async (req, res, next) => {
   }
 };
 
-// @desc   Delete a patient by ID
 const deletePatient = async (req, res, next) => {
   try {
     const patient = await Patient.findByIdAndDelete(req.params.id);
