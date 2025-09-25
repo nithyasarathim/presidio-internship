@@ -1,6 +1,17 @@
-const logger = (req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
-    next();
-  };
-  
-  export default logger;
+// utils/logger.js
+const logRequest = (req, res) => {
+  const start = new Date();
+
+  // Hook into response finish event
+  res.on('finish', () => {
+    const log = {
+      time: start.toISOString(),
+      method: req.method,
+      url: req.originalUrl,
+      statusCode: res.statusCode,
+    };
+    console.log(JSON.stringify(log));
+  });
+};
+
+export default logRequest;

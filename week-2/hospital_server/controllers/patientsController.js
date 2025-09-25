@@ -1,9 +1,11 @@
 import Patient from '../models/Patient.js';
 import { sendWelcomeEmail } from '../services/emailService.js';
 import ApiError from '../utils/ApiError.js';
+import logRequest from '../utils/logger.js';
 
 const getAllPatients = async (req, res, next) => {
   try {
+    logRequest(req, res);
     const patients = await Patient.find();
     res.status(200).json(patients);
   } catch (err) {
@@ -13,6 +15,7 @@ const getAllPatients = async (req, res, next) => {
 
 const getPatientById = async (req, res, next) => {
   try {
+    logRequest(req, res);
     const patient = await Patient.findById(req.params.id);
     if (!patient) {
       throw new ApiError(404, 'Patient not found');
@@ -25,6 +28,7 @@ const getPatientById = async (req, res, next) => {
 
 const createPatient = async (req, res, next) => {
   try {
+    logRequest(req, res);
     const newPatient = new Patient(req.body);
     const savedPatient = await newPatient.save();
     await sendWelcomeEmail(savedPatient.email, savedPatient.name);
@@ -36,6 +40,7 @@ const createPatient = async (req, res, next) => {
 
 const updatePatient = async (req, res, next) => {
   try {
+    logRequest(req, res);
     const patient = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!patient) {
       throw new ApiError(404, 'Patient not found');
@@ -48,6 +53,7 @@ const updatePatient = async (req, res, next) => {
 
 const deletePatient = async (req, res, next) => {
   try {
+    logRequest(req, res);
     const patient = await Patient.findByIdAndDelete(req.params.id);
     if (!patient) {
       throw new ApiError(404, 'Patient not found');
