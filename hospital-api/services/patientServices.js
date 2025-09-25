@@ -1,6 +1,6 @@
-const Patient = require("../models/patient");
+import Patient from "../modals/patient.js";
+import APIError from "../utilities/APIError.js";
 // const { sendWelcomeEmail } = require("./emailService");
-const APIError = require("../utils/APIError");
 
 const createPatient = async (data) => {
   const patient = await Patient.create(data);

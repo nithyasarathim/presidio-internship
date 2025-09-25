@@ -1,5 +1,5 @@
 import patientService from "../services/patientServices.js";
-const logger = require("../utils/logger");
+import logger from "../utilities/logger.js";
 
 const createPatient = async (req, res, next) => {
   const apiPath = req.originalUrl;
