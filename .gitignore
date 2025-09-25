@@ -1,4 +1,4 @@
-hospital_server/node_modules
-hospital_server/.env
-email_server/node_modules
-email_server/.env
+hospital-api/node_modules
+hospital-api/.env
+email-api/node_modules
+email-api/.env
