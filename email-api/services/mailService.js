@@ -1,9 +1,7 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-  secure: false,
+  service: "gmail",
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
@@ -11,13 +9,10 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendMail = async ({ to, subject, body }) => {
-  const mailOptions = {
+  return await transporter.sendMail({
     from: `"Email Service" <${process.env.MAIL_USER}>`,
     to,
     subject,
     text: body,
-    html: `<p>${body}</p>`,
-  };
-
-  return transporter.sendMail(mailOptions);
+  });
 };
