@@ -64,10 +64,20 @@ const deletePatient = async (req, res, next) => {
   }
 };
 
+const getStats = async (req, res, next) => {
+  try {
+    const totalPatients = await Patient.countDocuments();
+    res.json({ success: true, totalPatients });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   createPatient,
   getPatients,
   getPatient,
   updatePatient,
   deletePatient,
+  getStats
 };
