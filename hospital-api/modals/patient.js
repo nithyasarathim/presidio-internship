@@ -24,6 +24,11 @@ const patientSchema = new mongoose.Schema({
   dob: {
     type: Date,
     required: true
+  },
+  doctor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor",
+    required: true
   }
 }, { timestamps: true });
 
