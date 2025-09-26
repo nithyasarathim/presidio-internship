@@ -3,7 +3,7 @@ import logger from "../utilities/logger.js";
 
 const createPatient = async (req, res, next) => {
   const apiPath = req.originalUrl;
-  const data=req.body;
+  const data = req.body;
   try {
     logger.log(apiPath, "Create patient request received");
     const patient = await patientService.createPatient(data);
@@ -18,9 +18,11 @@ const getPatients = async (req, res, next) => {
   const apiPath = req.originalUrl;
   try {
     logger.log(apiPath, "Get all patients request received");
-    const patients = await patientService.getPatients();
+    const { page, limit, sort, ...filters } = req.query;
+    const result = await patientService.getPatients({ page, limit, sort, filters });
+
     logger.log(apiPath, "Patients retrieved successfully");
-    res.json({ success: true, patients });
+    res.json({ success: true, ...result });
   } catch (err) {
     next(err);
   }
@@ -62,10 +64,10 @@ const deletePatient = async (req, res, next) => {
   }
 };
 
-export default  {
+export default {
   createPatient,
   getPatients,
   getPatient,
   updatePatient,
-  deletePatient
+  deletePatient,
 };

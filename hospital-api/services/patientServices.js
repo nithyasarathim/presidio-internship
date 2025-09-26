@@ -1,6 +1,6 @@
 import Patient from "../modals/patient.js";
 import APIError from "../utilities/APIError.js";
-import {sendWelcomeEmail} from "./emailService.js";
+import { sendWelcomeEmail } from "./emailService.js";
 
 const createPatient = async (data) => {
   const patient = await Patient.create(data);
@@ -8,8 +8,27 @@ const createPatient = async (data) => {
   return patient;
 };
 
-const getPatients = async () => {
-  return await Patient.find();
+const getPatients = async ({ page = 1, limit = 10, sort, filters }) => {
+  const skip = (page - 1) * limit;
+  const query = {};
+  if (filters.age) query.age = filters.age;
+  if (filters.gender) query.gender = filters.gender;
+  let sortOption = {};
+  if (sort) {
+    const [field, order] = sort.split("_");
+    sortOption[field] = order === "desc" ? -1 : 1;
+  }
+  const patients = await Patient.find(query)
+    .skip(parseInt(skip))
+    .limit(parseInt(limit))
+    .sort(sortOption);
+  const total = await Patient.countDocuments(query);
+  return {
+    total,
+    page: parseInt(page),
+    limit: parseInt(limit),
+    patients,
+  };
 };
 
 const getPatientById = async (id) => {
@@ -30,9 +49,9 @@ const deletePatient = async (id) => {
 };
 
 export default {
-    createPatient,
-    getPatientById,
-    getPatients,
-    updatePatient,
-    deletePatient
-}
+  createPatient,
+  getPatientById,
+  getPatients,
+  updatePatient,
+  deletePatient,
+};
