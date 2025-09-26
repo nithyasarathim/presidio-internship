@@ -2,8 +2,8 @@ import Patient from "../modals/patient.js";
 import APIError from "../utilities/APIError.js";
 import { sendWelcomeEmail } from "./emailService.js";
 
-const createPatient = async (data) => {
-  const patient = await Patient.create(data);
+const createPatient = async (data,doctorId) => {
+  const patient = await Patient.create({...data,doctor:doctorId});
   await sendWelcomeEmail(patient);
   return patient;
 };
