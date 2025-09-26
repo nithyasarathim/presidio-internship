@@ -65,9 +65,12 @@ const deletePatient = async (req, res, next) => {
 };
 
 const getStats = async (req, res, next) => {
+  const apiPath = req.originalUrl;
   try {
-    const totalPatients = await Patient.countDocuments();
-    res.json({ success: true, totalPatients });
+    logger.log(apiPath, "Get patient stats request received");
+    const stats = await patientService.getStats();
+    logger.log(apiPath, "Patient stats retrieved successfully");
+    res.json({ success: true, ...stats });
   } catch (err) {
     next(err);
   }

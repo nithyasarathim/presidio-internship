@@ -48,10 +48,16 @@ const deletePatient = async (id) => {
   if (!patient) throw new APIError(404, "Patient not found");
 };
 
+const getStats = async () => {
+  const totalPatients = await Patient.countDocuments();
+  return { totalPatients };
+};
+
 export default {
   createPatient,
   getPatientById,
   getPatients,
   updatePatient,
   deletePatient,
+  getStats
 };
