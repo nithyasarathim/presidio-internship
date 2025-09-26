@@ -4,9 +4,10 @@ import logger from "../utilities/logger.js";
 const createPatient = async (req, res, next) => {
   const apiPath = req.originalUrl;
   const data = req.body;
+  const doctorId = req.user.id;
   try {
     logger.log(apiPath, "Create patient request received");
-    const patient = await patientService.createPatient(data);
+    const patient = await patientService.createPatient(data,doctorId);
     logger.log(apiPath, "Patient created successfully");
     res.status(201).json({ success: true, patient });
   } catch (err) {
