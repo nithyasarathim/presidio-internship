@@ -4,6 +4,6 @@ const router = express.Router();
 import analyticsController from "../controllers/analyticsController.js";
 import { authenticate, authorize } from "../middlewares/authMiddleware.js";
 
-router.post("/", authenticate, authorize("admin"),  analyticsController.getAnalytics);
+router.get("/", authenticate, authorize("admin"),  analyticsController.getAnalytics);
 
 export default router;

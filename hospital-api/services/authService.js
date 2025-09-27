@@ -17,7 +17,7 @@ const login = async ({ email, password }) => {
   if (!match) throw new APIError(401,"Invalid email or password");
 
   const token = jwt.sign(
-    { id: doctor._id, role: doctor.role },
+    { id: doctor._id, role: doctor.role, email: doctor.email },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
