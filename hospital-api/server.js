@@ -4,8 +4,10 @@ import express from "express";
 import connectDB from "./configs/db.js";
 import requestLogger from "./middlewares/requestLogger.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import patientsRoutes from "./routes/patientRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import patientsRoutes from "./routes/patientRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
+
 
 const app=express();
 
