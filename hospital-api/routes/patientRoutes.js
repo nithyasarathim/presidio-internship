@@ -10,7 +10,4 @@ router.get("/:id", authenticate, authorize("doctor"), patientController.getPatie
 router.put("/:id", authenticate, authorize("doctor"), patientController.updatePatient);
 router.delete("/:id", authenticate, authorize("doctor"), patientController.deletePatient);
 
-router.get("/analytics/stats", authenticate, authorize("admin"), patientController.getStats);
-
-
 export default router;
