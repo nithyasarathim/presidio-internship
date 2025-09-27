@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(requestLogger);
 app.use("/api/patients",patientsRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/analytics",analyticsRoutes);
 app.use(errorHandler);
 
 connectDB();
