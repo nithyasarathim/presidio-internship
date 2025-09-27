@@ -1,10 +1,11 @@
-import rateLimit from "express-rate-limit";
+import rateLimit,{ipKeyGenerator} from "express-rate-limit";
 
 export const patientRateLimiter = rateLimit({
   windowMs:1*60*1000,
   max: 20,
   keyGenerator: (req) => {
-    return req.user?.id || req.ip;
+    if(req.user?.id) return req.user.id;
+    return ipKeyGenerator(req);
   },
   handler: (req, res) => {
     res.status(429).json({
