@@ -1,6 +1,6 @@
 import rateLimit,{ipKeyGenerator} from "express-rate-limit";
 
-export const patientRateLimiter = rateLimit({
+export const doctorRateLimiter = rateLimit({
   windowMs:1*60*1000,
   max: 20,
   keyGenerator: (req) => {
