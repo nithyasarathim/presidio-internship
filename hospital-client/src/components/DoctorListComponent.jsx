@@ -1,9 +1,9 @@
 import React from 'react'
 
-const DoctorPage = () => {
+const DoctorListComponent = () => {
   return (
-    <div>DoctorPage</div>
+    <div>DoctorListComponent</div>
   )
 }
 
-export default DoctorPage
+export default DoctorListComponent

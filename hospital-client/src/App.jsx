@@ -1,14 +1,18 @@
 import React from 'react'
 import { BrowserRouter as Router,Routes,Route} from 'react-router-dom';
-import DashboardPage from './pages/AdminDashboard';
+import AdminPage from './pages/AdminPage';
+import DoctorPage from './pages/DoctorPage';
+import LoginPage from './pages/LoginPage';
+import LandingPage from './pages/LandingPage';
+import ProtectedRoute from './auth/ProtectedRoute';
 
 
 const App = () => {
-  // const navigate=useNavigate();
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<DashboardPage/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+        <Ro
       </Routes>
     </Router>
   )
