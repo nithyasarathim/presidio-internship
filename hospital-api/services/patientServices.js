@@ -8,11 +8,9 @@ const createPatient = async (data,doctorId) => {
   return patient;
 };
 
-const getPatients = async ({ page = 1, limit = 10, sort, filters }) => {
+const getPatients = async ({ page = 1, limit = 10, sort }) => {
   const skip = (page - 1) * limit;
   const query = {};
-  if (filters.age) query.age = filters.age;
-  if (filters.gender) query.gender = filters.gender;
   let sortOption = {};
   if (sort) {
     const [field, order] = sort.split("_");

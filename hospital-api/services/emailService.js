@@ -4,7 +4,7 @@ import logger from "../utilities/logger.js";
 const EMAIL_SERVICE_URL = process.env.EMAIL_SERVICE_URL;
 
 export const sendWelcomeEmail = async (patient) => {
-  const { name, email, dob, phone } = patient;
+  const { name, email } = patient;
   const apiPath = "EmailService/sendWelcomeEmail";
 
   try {

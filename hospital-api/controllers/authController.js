@@ -3,8 +3,10 @@ import logger from "../utilities/logger.js";
 
 const register = async (req, res, next) => {
   try {
-    const doctor = await authService.register(req.body);
-    logger.log(req.originalUrl, `Doctor registered: ${doctor.email}`);
+    const {body:data}=req;
+    const doctor = await authService.register(data);
+    const {email}=doctor;
+    logger.log(req.originalUrl, `Doctor registered: ${email}`);
     res.status(201).json({ success: true, doctor });
   } catch (err) {
     next(err);
@@ -23,8 +25,10 @@ const login = async (req, res, next) => {
 
 const profile = async (req, res, next) => {
   try {
-    const doctor = await authService.profile(req.user.id);
-    logger.log(req.originalUrl, `Profile accessed: ${doctor.email}`);
+    const {user:{id:userId}}=req;
+    const doctor = await authService.profile(userId);
+    const {email}=doctor;
+    logger.log(req.originalUrl, `Profile accessed: ${email}`);
     res.json({ success: true, doctor });
   } catch (err) {
     next(err);
