@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Error403 from "../components/Error403";
+import Error403 from "../error/Error403";
 
 const ProtectedRoute = ({ children, allowedRole = "" }) => {
   const token = localStorage.getItem("token");
