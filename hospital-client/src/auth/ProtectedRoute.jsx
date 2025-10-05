@@ -1,25 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import * as jwt_decode from "jwt-decode";
 import Error403 from "../error/Error403";
+import UserContext from "../context/UserContext";
 
-const ProtectedRoute = ({children,allowedRole}) => {
-
-  const token = localStorage.getItem("token");
+const ProtectedRoute=({children,allowedRole})=>{
+  const { role, token }=useContext(UserContext);
 
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  try {
-    const decoded = jwt_decode.default(token);
-    const {role}=decoded;
-    if (role!==allowedRole) {
-      return <Error403 />;
-    }
-  } catch (err) {
-    console.error("Invalid token:", err);
-    return <Navigate to="/login" replace />;
+  if (allowedRole && role!==allowedRole) {
+    return <Error403 />;
   }
 
   return children;

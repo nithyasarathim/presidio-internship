@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import * as jwt_decode from "jwt-decode";
+import Header from '../components/Header';
+import HeroComponent from "../components/HeroComponent";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -23,8 +25,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div>Hospital Client Landing Page</div>
-      <button onClick={() => navigate("/login")}>Login</button>
+      <Header/>
+      <HeroComponent/>
     </div>
   );
 };
