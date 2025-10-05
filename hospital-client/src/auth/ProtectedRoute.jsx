@@ -1,14 +1,19 @@
-import React from "react";
-import Error403 from "../components/Error403";
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
+import Error403 from "../error/Error403";
+import UserContext from "../context/UserContext"
 
-const ProtectedRoute = ({children,isAuthenticated,role,allowedRoles}) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace/>
+const ProtectedRoute=({children,allowedRole})=>{
+  const { role, token }=useContext(UserContext);
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
   }
-  if (!allowedRoles.includes(role)) {
-    return <Error403/>
+
+  if (allowedRole && role!==allowedRole) {
+    return <Error403 />;
   }
+
   return children;
 };
 
