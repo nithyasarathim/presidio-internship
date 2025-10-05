@@ -1,8 +1,15 @@
 import React from 'react'
+import { BrowserRouter as Router,Routes,Route, useNavigate} from 'react-router-dom';
+import DashboardPage from './pages/Dashboard';
 
 const App = () => {
+  // const navigate=useNavigate();
   return (
-    <div className='font-bold'>App</div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<DashboardPage/>}/>
+      </Routes>
+    </Router>
   )
 }
 
