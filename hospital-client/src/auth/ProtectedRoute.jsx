@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import Error403 from "../error/Error403";
-import UserContext from "../context/UserContext";
+import UserContext from "../context/UserContext"
 
 const ProtectedRoute=({children,allowedRole})=>{
   const { role, token }=useContext(UserContext);
