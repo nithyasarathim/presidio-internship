@@ -8,6 +8,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<DashboardPage/>}/>
+        <Route path='/admin' element={}
       </Routes>
     </Router>
   )
