@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router,Routes,Route, useNavigate} from 'react-router-dom';
-import DashboardPage from './pages/Dashboard';
+import { BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import DashboardPage from './pages/AdminDashboard';
+
 
 const App = () => {
   // const navigate=useNavigate();
@@ -8,9 +9,6 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<DashboardPage/>}/>
-        <Route path='/admin' element={
-          <p
-        }
       </Routes>
     </Router>
   )

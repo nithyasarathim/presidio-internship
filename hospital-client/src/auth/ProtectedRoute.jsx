@@ -3,14 +3,12 @@ import Error403 from "../components/Error403";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({children,isAuthenticated,role,allowedRoles}) => {
-  const navigate=useNavigate();
   if (!isAuthenticated) {
-    <Navigate to="/login" replace/>
+    return <Navigate to="/login" replace/>
   }
-  if (allowedRoles && !allowedRoles.includes(role)) {
+  if (!allowedRoles.includes(role)) {
     return <Error403/>
   }
-
   return children;
 };
 
