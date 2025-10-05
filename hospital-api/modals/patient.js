@@ -25,11 +25,6 @@ const patientSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  doctor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Doctor",
-    required: true
-  }
 }, { timestamps: true });
 
 const Patient = mongoose.model("Patient", patientSchema);
