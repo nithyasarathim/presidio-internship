@@ -1,7 +1,7 @@
 import React from 'react'
 import useApi from './api.jsx'
 
-export const login=async({email,password})=>{
+export const LoginService=async({email,password})=>{
     try{
         const api=useApi;
         const res=await api.post("/api/login",{email,password});

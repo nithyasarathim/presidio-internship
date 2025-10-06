@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import DoctorImage from "../assets/Doctors.png";
+import { LoginService } from "../services/authService";
 
 const LoginPage = () => {
   const { darkMode} = useContext(UserContext);
@@ -9,7 +10,7 @@ const LoginPage = () => {
 
   const handleSubmit =(e)=> {
     e.preventDefault();
-    console.log("Login attempt:", { email, password });
+    LoginService(email,password);
   };
 
   return (

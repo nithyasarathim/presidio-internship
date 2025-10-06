@@ -6,30 +6,33 @@ import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Wrapper from './layout/Wrapper';
+import {Toaster} from 'react-hot-toast';
 
 
 const App = () => {
   return (
-    
-    <Router>
-      <Wrapper>
-      <Routes>
-        <Route path='/' element={<LandingPage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/admin' element={
-            <ProtectedRoute allowedRole={"admin"}>
-              <AdminPage/>
+    <>
+      <Toaster position='top-right' reverseOrder={true}/>
+      <Router>
+        <Wrapper>
+        <Routes>
+          <Route path='/' element={<LandingPage/>}/>
+          <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/admin' element={
+              <ProtectedRoute allowedRole={"admin"}>
+                <AdminPage/>
+              </ProtectedRoute>
+          }/>
+          <Route path='/doctor' element={
+            <ProtectedRoute allowedRole={"doctor"}>
+              <DoctorPage/>
             </ProtectedRoute>
-        }/>
-        <Route path='/doctor' element={
-          <ProtectedRoute allowedRole={"doctor"}>
-            <DoctorPage/>
-          </ProtectedRoute>
-        }/>
-        <Route path='*' element={<Navigate to="/" replace/>}/>
-      </Routes>
-      </Wrapper>
-    </Router>
+          }/>
+          <Route path='*' element={<Navigate to="/" replace/>}/>
+        </Routes>
+        </Wrapper>
+      </Router>
+    </>
     
   )
 }
