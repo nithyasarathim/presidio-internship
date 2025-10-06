@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import 'cors';
 import express from "express";
 import connectDB from "./configs/db.js";
 import requestLogger from "./middlewares/requestLogger.js";
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(express.json());
 app.use(requestLogger);
+app.use(cors('*'));
 
 app.use("/api/patients", patientsRoutes);
 app.use("/api/auth", authRoutes);
