@@ -9,8 +9,7 @@ const useApi=()=>{
   const api=axios.create({
     baseURL,
     headers: {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}`:""
     },
   });
   return api;
