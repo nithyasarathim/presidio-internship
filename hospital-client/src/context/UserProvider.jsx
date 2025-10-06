@@ -39,7 +39,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{role,token,darkMode,toggleDarkMode,login,logout,setRole}}
+      value={{role,token,darkMode,toggleDarkMode,login,logout,setRole,setToken}}
     >
       {children}
     </UserContext.Provider>

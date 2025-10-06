@@ -8,33 +8,30 @@ import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const navigate=useNavigate();
-  const {darkMode,setRole,setToken} = useContext(UserContext);
+  const {darkMode,setRole,setToken,login} = useContext(UserContext);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await LoginService({ email, password});
-      if(!data.success){
+      const data = await LoginService({ email, password });
+      if (!data.success) {
         toast.error(data.error);
         return;
       }
       const {token}=data;
-      const {doctor:{role}}=data;
-      setToken(token);
-      setRole(role);
+      const { doctor:{role}} = data;
       localStorage.setItem("token", token);
+      login(token);
+      setRole(role);
       toast.success("Login successful!");
       if (role === "admin") navigate("/admin");
-      else if (role === "doctor") navigate("doctor");
+      else if (role === "doctor") navigate("/doctor");
     } catch (err) {
       console.log(err);
-      if (err.error) {
-        toast.error(err.error);
-      } else {
-        toast.error("Login failed. Please try again.");
-      }
+      if (err.error) toast.error(err.error);
+      else toast.error("Login failed. Please try again.");
     }
   };
   
