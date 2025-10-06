@@ -1,18 +1,13 @@
 import axios from "axios";
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
 
-const baseURL=import.meta.env.VITE_BASE_URL;
+const baseURL = import.meta.env.VITE_BASE_URL;
 
-const useApi=()=>{
-  const {token}=useContext(UserContext); 
-  const api=axios.create({
+export const createApi = (token) => {
+  return axios.create({
     baseURL,
     headers: {
-      Authorization: token ? `Bearer ${token}`:""
+      Authorization: token ? `Bearer ${token}` : "",
+      "Content-Type": "application/json",
     },
   });
-  return api;
 };
-
-export default useApi;

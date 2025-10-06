@@ -2,16 +2,42 @@ import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import DoctorImage from "../assets/Doctors.png";
 import { LoginService } from "../services/authService";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
-  const { darkMode} = useContext(UserContext);
+  const navigate=useNavigate();
+  const {darkMode,setRole,setToken} = useContext(UserContext);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
-  const handleSubmit =(e)=> {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    LoginService(email,password);
+    try {
+      const data = await LoginService({ email, password});
+      if(!data.success){
+        toast.error(data.error);
+        return;
+      }
+      const {token}=data;
+      const {doctor:{role}}=data;
+      setToken(token);
+      setRole(role);
+      localStorage.setItem("token", token);
+      toast.success("Login successful!");
+      if (role === "admin") navigate("/admin");
+      else if (role === "doctor") navigate("doctor");
+    } catch (err) {
+      console.log(err);
+      if (err.error) {
+        toast.error(err.error);
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    }
   };
+  
 
   return (
     <div
