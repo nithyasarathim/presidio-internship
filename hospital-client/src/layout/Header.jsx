@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { Moon, Sun } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { role, darkMode, toggleDarkMode, logout } = useContext(UserContext);
+
   return (
-    <div className={`w-full px-15 py-5 flex justify-between items-center shadow-md ${darkMode?"bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
+    <div className={`w-full px-15 py-5 flex justify-between items-center ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
       <h1 className="font-bold text-2xl">Hospital Management System</h1>
       <div className="flex items-center gap-4">
         {role === "admin" && (
@@ -28,7 +30,7 @@ const Header = () => {
         >
           {darkMode ? <Sun /> : <Moon />}
         </button>
-        {!role && (
+        {!role && location.pathname === "/" && (
           <button onClick={() => navigate("/login")} className="px-4 py-2 bg-sky-500 rounded-lg text-white">Login</button>
         )}
       </div>

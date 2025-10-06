@@ -5,11 +5,14 @@ import DoctorPage from './pages/DoctorPage';
 import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './auth/ProtectedRoute';
+import Wrapper from './layout/Wrapper';
 
 
 const App = () => {
   return (
+    
     <Router>
+      <Wrapper>
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
@@ -25,7 +28,9 @@ const App = () => {
         }/>
         <Route path='*' element={<Navigate to="/" replace/>}/>
       </Routes>
+      </Wrapper>
     </Router>
+    
   )
 }
 

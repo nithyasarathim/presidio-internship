@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import * as jwt_decode from "jwt-decode";
-import Header from '../components/Header';
 import HeroComponent from "../components/HeroComponent";
 
 const Dashboard = () => {
@@ -25,7 +24,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Header/>
       <HeroComponent/>
     </div>
   );
