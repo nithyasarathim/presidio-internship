@@ -14,14 +14,14 @@ const Header = () => {
       <div className="flex items-center gap-4">
         {role === "admin" && (
           <>
-            <button onClick={() => navigate("/doctors")} className="px-3 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Doctors</button>
-            <button onClick={() => navigate("/analytics")} className="px-3 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Analytics</button>
+            <button onClick={() => navigate("/doctors")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Doctors</button>
+            <button onClick={() => navigate("/analytics")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Analytics</button>
           </>
         )}
         {role && (
           <>
-            <button onClick={() => navigate("/profile")} className="px-3 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Profile</button>
-            <button onClick={logout} className="px-3 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Logout</button>
+            <button onClick={() => navigate("/profile")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Profile</button>
+            <button onClick={logout} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Logout</button>
           </>
         )}
         <button
