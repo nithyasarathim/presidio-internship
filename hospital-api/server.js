@@ -15,7 +15,7 @@ const app = express();
 
 app.use(express.json());
 app.use(requestLogger);
-app.use(cors('*'));
+app.use(cors());
 
 app.use("/api/patients", patientsRoutes);
 app.use("/api/auth", authRoutes);
