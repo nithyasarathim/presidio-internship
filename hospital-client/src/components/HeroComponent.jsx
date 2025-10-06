@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
-import DoctorImage from "../assets/Doctors.png";
+import HospitalImage from "../assets/Hospital.png";
 import { useNavigate } from "react-router";
 
 const HeroComponent = () => {
@@ -26,7 +26,7 @@ const HeroComponent = () => {
         </button>
       </div>
 
-      <img src={DoctorImage} alt="Doctors" className="w-fit md:w-fit h-130" />
+      <img src={HospitalImage} alt="Doctors" className="w-fit md:w-fit h-130" />
     </div>
   );
 };
