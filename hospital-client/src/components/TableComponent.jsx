@@ -1,18 +1,49 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { updatePatient, deletePatient } from "../services/patientService";
 
-const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
+const Table = ({ patients, page, setPage, totalPages, darkMode, token, reloadPatients }) => {
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [editData, setEditData] = useState({});
 
   const handleRowClick = (patient) => {
     setSelectedPatient(patient);
+    setEditData(patient);
   };
 
   const handleCloseModal = () => {
     setSelectedPatient(null);
+    setEditData({});
+  };
+
+  const handleInputChange = (e) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await updatePatient(token, selectedPatient._id, editData);
+      toast.success("Patient updated successfully!");
+      reloadPatients();
+      setSelectedPatient(null);
+    } catch {
+      toast.error("Failed to update patient.");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deletePatient(token, selectedPatient._id);
+      toast.success("Patient deleted successfully!");
+      reloadPatients();
+      setSelectedPatient(null);
+    } catch {
+      toast.error("Failed to delete patient.");
+    }
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl shadow-md">
+    <div className="overflow-x-auto rounded-xl shadow-md px-10">
       <table
         className={`w-full text-sm ${
           darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
@@ -26,7 +57,6 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
             <th className="p-3 text-left">Email</th>
             <th className="p-3 text-left">Phone</th>
             <th className="p-3 text-left">DOB</th>
-            <th className="p-3 text-left">Created</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +75,7 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
                   darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
                 }`}
               >
-                <td className="p-3">{(page - 1) * 5 + index + 1}</td>
+                <td className="p-3">{(page - 1) * 10 + index + 1}</td>
                 <td className="p-3 font-semibold">{patient.name}</td>
                 <td className="p-3">
                   <span
@@ -65,16 +95,12 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
                 <td className="p-3">
                   {new Date(patient.dob).toLocaleDateString()}
                 </td>
-                <td className="p-3 text-gray-500">
-                  {new Date(patient.createdAt).toLocaleDateString()}
-                </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
 
-      {/* Pagination */}
       <div
         className={`flex justify-between items-center px-4 py-3 ${
           darkMode ? "bg-gray-800 text-gray-200" : "bg-gray-100 text-gray-700"
@@ -99,7 +125,6 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
         </button>
       </div>
 
-      {/* Modal */}
       {selectedPatient && (
         <div className="fixed inset-0 flex items-center justify-center bg-[#00000090]">
           <div
@@ -112,29 +137,37 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
             <div className="flex flex-col gap-3">
               <input
                 type="text"
-                defaultValue={selectedPatient.name}
+                name="name"
+                value={editData.name}
+                onChange={handleInputChange}
                 className="px-3 py-2 border rounded-lg"
               />
               <input
                 type="number"
-                defaultValue={selectedPatient.age}
+                name="age"
+                value={editData.age}
+                onChange={handleInputChange}
                 className="px-3 py-2 border rounded-lg"
               />
               <input
                 type="email"
-                defaultValue={selectedPatient.email}
+                name="email"
+                value={editData.email}
+                onChange={handleInputChange}
                 className="px-3 py-2 border rounded-lg"
               />
               <input
                 type="text"
-                defaultValue={selectedPatient.phone}
+                name="phone"
+                value={editData.phone}
+                onChange={handleInputChange}
                 className="px-3 py-2 border rounded-lg"
               />
               <input
                 type="date"
-                defaultValue={new Date(
-                  selectedPatient.dob
-                ).toISOString().split("T")[0]}
+                name="dob"
+                value={new Date(editData.dob).toISOString().split("T")[0]}
+                onChange={handleInputChange}
                 className="px-3 py-2 border rounded-lg"
               />
             </div>
@@ -147,10 +180,16 @@ const Table = ({ patients, page, setPage, totalPages, darkMode }) => {
                 Close
               </button>
               <div className="flex gap-3">
-                <button className="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600">
+                <button
+                  onClick={handleUpdate}
+                  className="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600"
+                >
                   Edit
                 </button>
-                <button className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">
+                <button
+                  onClick={handleDelete}
+                  className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+                >
                   Delete
                 </button>
               </div>
