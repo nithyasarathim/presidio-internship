@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import DoctorImage from "../assets/Doctors.png";
+import { useNavigate } from "react-router";
 
 const HeroComponent = () => {
   const { darkMode } = useContext(UserContext);
+  const navigate= useNavigate();
 
   return (
     <div className={`w-full min-h-fit flex flex-col md:flex-row items-center justify-between px-20 py-15 
@@ -19,7 +21,7 @@ const HeroComponent = () => {
         </p>
 
 
-        <button className="w-max px-6 py-3 bg-sky-500 rounded-lg text-white hover:bg-sky-600 transition">
+        <button className="w-max px-6 py-3 bg-sky-500 rounded-lg text-white hover:bg-sky-600 transition" onClick={()=>{navigate('/login')}}>
             Login To Your Account
         </button>
       </div>
