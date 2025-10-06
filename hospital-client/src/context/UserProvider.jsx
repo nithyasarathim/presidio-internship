@@ -7,6 +7,8 @@ const UserProvider = ({ children }) => {
   const [role, setRole]=useState("");
   const [token, setToken]=useState(localStorage.getItem("token")||"");
   const [darkMode,setDarkMode] = useState(false);
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
 
   useEffect(() => {
     if (token) {
@@ -14,6 +16,8 @@ const UserProvider = ({ children }) => {
       try {
         const decoded = jwt_decode(token);
         setRole(decoded.role||"");
+        setName(decoded.name||"");
+        setEmail(decoded.email||"");
       } catch {
         console.error("Invalid token");
         setRole("");
@@ -41,7 +45,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{role,token,darkMode,toggleDarkMode,login,logout,setRole,setToken}}
+      value={{role,token,darkMode,toggleDarkMode,login,logout,setRole,setToken,name,email}}
     >
       {children}
     </UserContext.Provider>

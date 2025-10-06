@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext";
 import { fetchPatients } from "../services/patientService";
-import Table from "../components/TableComponent";
+import PatientList from "../components/PatientListComponent";
 import toast from "react-hot-toast";
 import CreatePatientModal from "../components/CreatePatientModal";
 
@@ -71,7 +71,7 @@ const DoctorPage = () => {
         {loading ? (
           <p>Loading patients...</p>
         ) : (
-          <Table
+          <PatientList
             patients={patients}
             page={page}
             setPage={setPage}

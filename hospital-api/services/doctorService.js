@@ -2,7 +2,6 @@ import Doctor from "../modals/doctor.js";
 import bcrypt from "bcryptjs";
 import APIError from "../utilities/APIError.js";
 
-// Register a new doctor
 const createDoctor = async (data) => {
   const existing = await Doctor.findOne({ email: data.email });
   if (existing) throw new APIError(400, "Doctor with this email already exists");
@@ -12,13 +11,11 @@ const createDoctor = async (data) => {
   return doctor;
 };
 
-// Get all doctors
 const getDoctors = async () => {
   const doctors = await Doctor.find().select("-password");
   return doctors;
 };
 
-// Get doctor by ID
 const getDoctorById = async (id) => {
   const doctor = await Doctor.findById(id).select("-password");
   if (!doctor) throw new APIError(404, "Doctor not found");

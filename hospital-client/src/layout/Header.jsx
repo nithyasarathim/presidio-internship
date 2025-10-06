@@ -12,12 +12,6 @@ const Header = () => {
     <div className={`w-full px-15 py-5 flex justify-between items-center ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
       <h1 className="font-bold text-2xl">Hospital Management System</h1>
       <div className="flex items-center gap-4">
-        {role === "admin" && (
-          <>
-            <button onClick={() => navigate("/doctors")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Doctors</button>
-            <button onClick={() => navigate("/analytics")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Analytics</button>
-          </>
-        )}
         {role && (
           <>
             <button onClick={() => navigate("/profile")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Profile</button>

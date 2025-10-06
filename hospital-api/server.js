@@ -21,7 +21,7 @@ app.use(cors());
 app.use("/api/patients", patientsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics", analyticsRoutes);
-app.use("/api/doctor",doctorRoutes);
+app.use("/api/doctors",doctorRoutes);
 
 const swaggerOptions = {
   definition: {
