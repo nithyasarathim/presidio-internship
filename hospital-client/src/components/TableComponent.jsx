@@ -43,7 +43,7 @@ const Table = ({ patients, page, setPage, totalPages, darkMode, token, reloadPat
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl shadow-md px-10">
+    <div className="overflow-x-auto rounded-xl w-[80vw] flex flex-col m-auto self-center">
       <table
         className={`w-full text-sm ${
           darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"

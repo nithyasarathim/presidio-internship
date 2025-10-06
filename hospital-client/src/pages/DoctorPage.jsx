@@ -39,12 +39,9 @@ const DoctorPage = () => {
 
   return (
     <div className={darkMode ? "bg-gray-900 text-white min-h-screen items-center px-15" : "bg-white text-black min-h-screen px-15"}>
-      <header className="p-4 border-b flex justify-between align-center">
-        <div>
-          <h1 className="text-2xl font-bold">Doctor Dashboard</h1>
-          <p className="text-sm">{doctor.name} ({doctor.email})</p>
-        </div>
-
+      <header className="p-4 flex justify-between align-center">
+          <h1 className="text-2xl px-5 py-2">Doctor Dashboard</h1>
+          <p className="text-sm flex items-center gap-2">Welcome<p className='text-xl font-semibold pr-5'>{doctor.name}!</p> ({doctor.email})</p>
         <div className="flex items-center align-center gap-2">
           <div className=" w-fit flex gap-2">
             <select
