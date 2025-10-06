@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserContext from "./UserContext";
 import jwt_decode from "jwt-decode";
+import toast from 'react-hot-toast';
 
 const UserProvider = ({ children }) => {
   const [role, setRole]=useState("");
@@ -33,6 +34,7 @@ const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
+    toast.success("Logout successful !");
     setToken("");
     setRole("");
   };
