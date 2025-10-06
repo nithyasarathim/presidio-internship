@@ -4,11 +4,10 @@ import DoctorImage from "../assets/Doctors.png";
 import { LoginService } from "../services/authService";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const navigate=useNavigate();
-  const {darkMode,setRole,setToken,login} = useContext(UserContext);
+  const {darkMode,setRole,login} = useContext(UserContext);
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 

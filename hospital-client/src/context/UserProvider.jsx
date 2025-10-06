@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserContext from "./UserContext";
-import * as jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 const UserProvider = ({ children }) => {
   const [role, setRole]=useState("");
@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
     if (token) {
       localStorage.setItem("token", token);
       try {
-        const decoded = jwt_decode.default(token);
+        const decoded = jwt_decode(token);
         setRole(decoded.role||"");
       } catch {
         console.error("Invalid token");
