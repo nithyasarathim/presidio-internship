@@ -38,16 +38,20 @@ const DoctorPage = () => {
   }, [page, sort, filter, token]);
 
   return (
-    <div className={darkMode ? "bg-gray-900 text-white min-h-screen items-center px-15" : "bg-white text-black min-h-screen px-15"}>
-      <header className="p-4 flex justify-between align-center">
-          <h1 className="text-2xl px-5 py-2">Doctor Dashboard</h1>
-          <p className="text-sm flex items-center gap-2">Welcome<p className='text-xl font-semibold pr-5'>{doctor.name}!</p> ({doctor.email})</p>
-        <div className="flex items-center align-center gap-2">
-          <div className=" w-fit flex gap-2">
+    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"} min-h-screen px-4 sm:px-6 md:px-10 lg:px-20`}>
+      <header className="p-4 flex sm:flex-row justify-between sm:items-center gap-2 sm:gap-0">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-semibold hidden md:block">Doctor Dashboard</h1>
+        <p className="text-sm sm:text-base flex items-center gap-3 sm:gap-4">
+          <span className="text-xs sm:text-sm font-medium">Welcome</span>
+          <span className="text-sm sm:text-base font-semibold">{doctor.name}!</span>
+          <span className="hidden lg:inline">({doctor.email})</span>
+        </p>
+        <div className="flex flex-wrap gap-2 mt-2 sm:mt-0 items-center flex-col md:flex-row">
+          <div className="w-full sm:w-fit flex gap-2">
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="px-3 py-1 border rounded-lg"
+              className="px-3 py-1 border rounded-lg text-sm sm:text-base"
             >
               <option value="createdAt_desc">Newest First</option>
               <option value="createdAt_asc">Oldest First</option>
@@ -58,7 +62,7 @@ const DoctorPage = () => {
             </select>
           </div>
           <button
-            className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
+            className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition text-sm sm:text-base"
             onClick={() => setCreateModalOpen(true)}
           >
             Create Patient
@@ -66,10 +70,9 @@ const DoctorPage = () => {
         </div>
       </header>
 
-      <main className="p-6">
-
+      <main className="p-4 sm:p-6">
         {loading ? (
-          <p>Loading patients...</p>
+          <p className="text-center py-6">Loading patients...</p>
         ) : (
           <PatientList
             patients={patients}

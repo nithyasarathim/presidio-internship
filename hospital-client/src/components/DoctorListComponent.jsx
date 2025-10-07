@@ -15,7 +15,6 @@ const DoctorCrudComponent = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 8;
 
-  // Load doctors
   const loadDoctors = async () => {
     if (!token) return toast.error("Not authorized");
     setLoading(true);
@@ -33,7 +32,6 @@ const DoctorCrudComponent = () => {
     loadDoctors();
   }, [token]);
 
-  // Create new doctor
   const handleCreate = async () => {
     if (!token) return toast.error("Not authorized");
     try {
@@ -46,7 +44,6 @@ const DoctorCrudComponent = () => {
     }
   };
 
-  // Edit doctor
   const handleEdit = (doctor) => {
     setEditDoctor(doctor);
     setEditData({ ...doctor, password: "" });
@@ -63,7 +60,6 @@ const DoctorCrudComponent = () => {
     }
   };
 
-  // Delete doctor
   const handleDelete = async () => {
     try {
       await deleteDoctor(token, deleteDoctorId);
@@ -75,13 +71,11 @@ const DoctorCrudComponent = () => {
     }
   };
 
-  // Pagination
   const totalPages = Math.ceil(doctors.length / rowsPerPage);
   const visibleDoctors = doctors.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   return (
     <div className="flex flex-col items-center w-[85vw] mx-auto space-y-8">
-      {/* Add Doctor Form */}
       <div
         className={`w-full p-6 rounded-xl shadow-md ${
           darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
