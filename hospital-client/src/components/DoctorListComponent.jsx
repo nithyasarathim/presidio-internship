@@ -9,8 +9,9 @@ const DoctorCrudComponent = () => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newDoctor, setNewDoctor] = useState({ name: "", email: "", password: "", role: "doctor" });
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [editDoctor, setEditDoctor] = useState(null);
   const [editData, setEditData] = useState({});
+  const [deleteDoctorId, setDeleteDoctorId] = useState(null);
   const [page, setPage] = useState(1);
   const rowsPerPage = 8;
 
@@ -21,7 +22,7 @@ const DoctorCrudComponent = () => {
     try {
       const data = await fetchDoctors(token);
       setDoctors(data);
-    } catch (err) {
+    } catch {
       toast.error("Failed to load doctors");
     } finally {
       setLoading(false);
@@ -45,31 +46,30 @@ const DoctorCrudComponent = () => {
     }
   };
 
-  // Edit modal handlers
-  const handleRowClick = (doctor) => {
-    setSelectedDoctor(doctor);
+  // Edit doctor
+  const handleEdit = (doctor) => {
+    setEditDoctor(doctor);
     setEditData({ ...doctor, password: "" });
   };
-  const handleCloseModal = () => setSelectedDoctor(null);
-  const handleInputChange = (e) => setEditData({ ...editData, [e.target.name]: e.target.value });
 
   const handleUpdate = async () => {
     try {
-      await updateDoctor(token, selectedDoctor._id, editData);
+      await updateDoctor(token, editDoctor._id, editData);
       toast.success("Doctor updated successfully!");
+      setEditDoctor(null);
       loadDoctors();
-      setSelectedDoctor(null);
     } catch {
       toast.error("Failed to update doctor.");
     }
   };
 
+  // Delete doctor
   const handleDelete = async () => {
     try {
-      await deleteDoctor(token, selectedDoctor._id);
+      await deleteDoctor(token, deleteDoctorId);
       toast.success("Doctor deleted successfully!");
+      setDeleteDoctorId(null);
       loadDoctors();
-      setSelectedDoctor(null);
     } catch {
       toast.error("Failed to delete doctor.");
     }
@@ -144,12 +144,13 @@ const DoctorCrudComponent = () => {
                 <th className="p-3 text-left">Email</th>
                 <th className="p-3 text-left">Role</th>
                 <th className="p-3 text-left">Created At</th>
+                <th className="p-3 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {visibleDoctors.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-6">
+                  <td colSpan="6" className="text-center py-6">
                     No doctors found.
                   </td>
                 </tr>
@@ -157,8 +158,7 @@ const DoctorCrudComponent = () => {
                 visibleDoctors.map((doc, index) => (
                   <tr
                     key={doc._id}
-                    onClick={() => handleRowClick(doc)}
-                    className={`cursor-pointer transition ${
+                    className={`transition ${
                       darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
                     }`}
                   >
@@ -167,6 +167,20 @@ const DoctorCrudComponent = () => {
                     <td className="p-3">{doc.email}</td>
                     <td className="p-3 capitalize">{doc.role}</td>
                     <td className="p-3">{new Date(doc.createdAt).toLocaleString()}</td>
+                    <td className="p-3 flex gap-3">
+                      <button
+                        onClick={() => handleEdit(doc)}
+                        className="p-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 transition"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                      <button
+                        onClick={() => setDeleteDoctorId(doc._id)}
+                        className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
                   </tr>
                 ))
               )}
@@ -200,62 +214,81 @@ const DoctorCrudComponent = () => {
         </button>
       </div>
 
-      {/* Edit/Delete Modal */}
-      {selectedDoctor && (
+      {/* Edit Modal */}
+      {editDoctor && (
         <div className="fixed inset-0 flex items-center justify-center bg-[#00000090] z-50">
           <div
             className={`rounded-xl shadow-lg p-6 w-full max-w-md ${
               darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
             }`}
           >
-            <h2 className="text-xl font-bold mb-4">Doctor Details</h2>
+            <h2 className="text-xl font-bold mb-4">Edit Doctor</h2>
             <div className="flex flex-col gap-3">
               <input
                 type="text"
                 name="name"
                 value={editData.name}
-                onChange={handleInputChange}
+                onChange={(e) => setEditData({ ...editData, name: e.target.value })}
                 className="px-3 py-2 border rounded-lg"
               />
               <input
                 type="email"
                 name="email"
                 value={editData.email}
-                onChange={handleInputChange}
+                onChange={(e) => setEditData({ ...editData, email: e.target.value })}
                 className="px-3 py-2 border rounded-lg"
               />
               <select
                 name="role"
                 value={editData.role}
-                onChange={handleInputChange}
+                onChange={(e) => setEditData({ ...editData, role: e.target.value })}
                 className="px-3 py-2 border rounded-lg"
               >
                 <option value="doctor">Doctor</option>
                 <option value="admin">Admin</option>
               </select>
             </div>
-
             <div className="flex justify-between mt-6">
               <button
-                onClick={handleCloseModal}
+                onClick={() => setEditDoctor(null)}
                 className="px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500"
               >
-                Close
+                Cancel
               </button>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleUpdate}
-                  className="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                onClick={handleUpdate}
+                className="px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteDoctorId && (
+        <div className="fixed inset-0 flex items-center justify-center bg-[#00000090] z-50">
+          <div
+            className={`rounded-xl shadow-lg p-6 w-full max-w-sm ${
+              darkMode ? "bg-gray-900 text-gray-200" : "bg-white text-gray-800"
+            }`}
+          >
+            <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
+            <p>Are you sure you want to delete this doctor?</p>
+            <div className="flex justify-end mt-6 gap-4">
+              <button
+                onClick={() => setDeleteDoctorId(null)}
+                className="px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
