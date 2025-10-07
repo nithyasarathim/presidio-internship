@@ -13,10 +13,7 @@ const Header = () => {
       <h1 className="font-bold text-2xl">Hospital Management System</h1>
       <div className="flex items-center gap-4">
         {role && (
-          <>
-            <button onClick={() => navigate("/profile")} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Profile</button>
             <button onClick={logout} className={`px-3 py-1 rounded ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-50"}`}>Logout</button>
-          </>
         )}
         <button
           onClick={toggleDarkMode}
