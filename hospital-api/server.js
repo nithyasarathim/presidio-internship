@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import cors from 'cors';
 import express from "express";
 import connectDB from "./configs/db.js";
 import requestLogger from "./middlewares/requestLogger.js";
@@ -6,6 +7,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import authRoutes from "./routes/authRoutes.js";
 import patientsRoutes from "./routes/patientRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
 
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -14,10 +16,12 @@ const app = express();
 
 app.use(express.json());
 app.use(requestLogger);
+app.use(cors());
 
 app.use("/api/patients", patientsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/doctors",doctorRoutes);
 
 const swaggerOptions = {
   definition: {
