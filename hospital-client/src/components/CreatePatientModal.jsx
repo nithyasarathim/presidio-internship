@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import { createPatient } from "../services/patientService";
+
 
 const CreatePatientModal = ({ token, darkMode, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
@@ -25,11 +26,7 @@ const CreatePatientModal = ({ token, darkMode, onClose, onSuccess }) => {
 
     setLoading(true);
     try {
-      await axios.post(
-        "http://localhost:5000/api/patients",
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await createPatient(token, formData);
       toast.success("Patient created successfully");
       onSuccess();
     } catch (err) {
