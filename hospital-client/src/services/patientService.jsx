@@ -1,6 +1,15 @@
 import { createApi } from "./api";
 
-// Fetch patients with pagination, sort, and optional filter
+export const createPatient = async (token, patientData) => {
+  try {
+    const api = createApi(token);
+    const res = await api.post("/api/patients", patientData);
+    return res.data;
+  } catch (err) {
+    throw err.response ? err.response.data : err;
+  }
+};
+
 export const fetchPatients = async (
   token,
   page = 1,
@@ -20,7 +29,6 @@ export const fetchPatients = async (
   }
 };
 
-// Update patient details
 export const updatePatient = async (token, id, data) => {
   try {
     const api = createApi(token);
@@ -31,7 +39,6 @@ export const updatePatient = async (token, id, data) => {
   }
 };
 
-// Delete patient
 export const deletePatient = async (token, id) => {
   try {
     const api = createApi(token);

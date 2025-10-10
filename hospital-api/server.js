@@ -35,7 +35,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "API documentation for Patient, Auth, and Analytics services",
     },
-    servers: [{ url: "http://localhost:5000/api" }],
+    servers: [{ url: "https://hospital-api-a7h9fjbwaph6hzc0.centralindia-01.azurewebsites.net/" }],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -55,7 +55,7 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(errorHandler);
 
 connectDB();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
