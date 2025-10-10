@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_BASE_URL;
+const baseURL = "https://hospital-api-a7h9fjbwaph6hzc0.centralindia-01.azurewebsites.net/";
 
 export const createApi = (token) => {
   return axios.create({
