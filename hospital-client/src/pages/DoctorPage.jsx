@@ -53,12 +53,12 @@ const DoctorPage = () => {
               onChange={(e) => setSort(e.target.value)}
               className="px-3 py-1 border rounded-lg text-sm sm:text-base"
             >
-              <option value="createdAt_desc">Newest First</option>
-              <option value="createdAt_asc">Oldest First</option>
-              <option value="age_asc">Age Asc</option>
-              <option value="age_desc">Age Desc</option>
-              <option value="name_asc">Name A-Z</option>
-              <option value="name_desc">Name Z-A</option>
+              <option value="createdAt_desc" className={`${darkMode?"bg-black":"bg-white"}`}>Newest First</option>
+              <option value="createdAt_asc" className={`${darkMode?"bg-black":"bg-white"}`}>Oldest First</option>
+              <option value="age_asc" className={`${darkMode?"bg-black":"bg-white"}`}>Age Asc</option>
+              <option value="age_desc" className={`${darkMode?"bg-black":"bg-white"}`}>Age Desc</option>
+              <option value="name_asc" className={`${darkMode?"bg-black":"bg-white"}`}>Name A-Z</option>
+              <option value="name_desc" className={`${darkMode?"bg-black":"bg-white"}`}>Name Z-A</option>
             </select>
           </div>
           <button

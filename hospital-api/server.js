@@ -1,4 +1,4 @@
-import 'dotenv/config';
+
 import cors from 'cors';
 import express from "express";
 import connectDB from "./configs/db.js";
@@ -11,6 +11,10 @@ import doctorRoutes from "./routes/doctorRoutes.js";
 
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+
+if (process.env.NODE_ENV !== "production"){
+  await import('dotenv/config');
+}
 
 const app = express();
 
