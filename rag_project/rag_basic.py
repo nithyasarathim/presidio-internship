@@ -1,31 +1,38 @@
-import fitz  # PyMuPDF for PDF text extraction
+import fitz
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 import chromadb
-from chromadb.config import Settings
 import subprocess
 
-# --- Step 1: Extract Text from PDF ---
 pdf_path = "data/sample.pdf"
+file_name = pdf_path.split("/")[-1]
 
-pdf_text = ""
+pdf_texts = []
 with fitz.open(pdf_path) as doc:
-    for page in doc:
-        pdf_text += page.get_text()
+    for page_num, page in enumerate(doc, start=1):
+        text = page.get_text()
+        pdf_texts.append({"page": page_num, "text": text})
 
-print(f"Extracted text from PDF ({len(pdf_text)} characters).")
+print(f"Extracted text from {len(pdf_texts)} pages.")
 
-# --- Step 2: Split Text into Chunks ---
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-chunks = splitter.split_text(pdf_text)
-print(f"Split into {len(chunks)} chunks.")
+splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+chunks, metadata_list = [], []
 
-# --- Step 3: Generate Embeddings using Hugging Face ---
+for page_data in pdf_texts:
+    text_chunks = splitter.split_text(page_data["text"])
+    for chunk in text_chunks:
+        chunks.append(chunk)
+        metadata_list.append({
+            "file_name": file_name,
+            "page_number": page_data["page"]
+        })
+
+print(f"Split text into {len(chunks)} chunks.")
+
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 embeddings = embedder.encode(chunks)
 print("Embeddings created successfully.")
 
-# --- Step 4: Store in ChromaDB ---
 client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_or_create_collection("pdf_chunks")
 
@@ -33,32 +40,37 @@ for i, chunk in enumerate(chunks):
     collection.add(
         ids=[str(i)],
         documents=[chunk],
-        embeddings=[embeddings[i]]
+        embeddings=[embeddings[i]],
+        metadatas=[metadata_list[i]]
     )
 
-print("All chunks stored in ChromaDB.")
+print("All chunks stored in ChromaDB with metadata.")
 
-# --- Step 5: Query the RAG System ---
-query = input("\n🔍 Enter your question: ")
+query = input("\nEnter your question: ")
 query_embedding = embedder.encode([query])[0]
 
 results = collection.query(
     query_embeddings=[query_embedding],
-    n_results=3
+    n_results=3,
+    include=["documents", "metadatas"]
 )
 
 top_chunks = results['documents'][0]
-print("\nTop 3 relevant chunks:\n")
-for i, chunk in enumerate(top_chunks, 1):
-    print(f"Chunk {i}:\n{chunk[:500]}...\n")
+top_meta = results['metadatas'][0]
 
-# --- Step 6: Ask Mistral via Ollama ---
+print("\nTop 3 relevant chunks:\n")
+for i, (chunk, meta) in enumerate(zip(top_chunks, top_meta), start=1):
+    print(f"Chunk {i} (File: {meta['file_name']}, Page: {meta['page_number']}):\n")
+    print(f"{chunk[:400]}...\n")
+
 def ask_mistral(context, query):
     prompt = f"Answer the question based on the following context:\n\n{context}\n\nQuestion: {query}\nAnswer:"
     result = subprocess.run(
         ["ollama", "run", "mistral", prompt],
         capture_output=True,
-        text=True
+        text=True,
+        encoding="utf-8",
+        errors="ignore" 
     )
     return result.stdout.strip()
 
