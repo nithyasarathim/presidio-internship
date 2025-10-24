@@ -6,6 +6,8 @@ import subprocess
 
 pdf_path = "data/sample.pdf"
 file_name = pdf_path.split("/")[-1]
+system_prompt = "Answer only from the given documents. If not found, say: 'Information not available in the knowledge base.'"
+
 
 pdf_texts = []
 with fitz.open(pdf_path) as doc:
@@ -64,7 +66,7 @@ for i, (chunk, meta) in enumerate(zip(top_chunks, top_meta), start=1):
     print(f"{chunk[:400]}...\n")
 
 def ask_mistral(context, query):
-    prompt = f"Answer the question based on the following context:\n\n{context}\n\nQuestion: {query}\nAnswer:"
+    prompt = f"{system_prompt}\n\nAnswer the question based on the following context:\n\n{context}\n\nQuestion: {query}\nAnswer:"
     result = subprocess.run(
         ["ollama", "run", "mistral", prompt],
         capture_output=True,
